@@ -10,22 +10,23 @@ request.send();
 request.addEventListener('load', function () {
   const [data] = JSON.parse(this.responseText);
   console.log(data);
-  const [common] = Object.entries(data.name);
-  const [png, svg] = Object.entries(data.flags);
-  const [por] = Object.entries(data.languages);
-  const [cur] = Object.entries(data.currencies);
+  const { common } = data.name;
+  const { png } = data.flags;
+  const { por } = data.languages;
+  const { cur } = data.currencies;
 
   const html = `
   <article class="country">
-  <h3 class="country__name">${common}</h3>
+  <img class="country__img" src="${png}" />
+  
     <div class="country__data">
-    <img class="country__img" src="${png}" />
+    <h3 class="country__name">${common}</h3>
       <h4 class="country__region">${data.region}</h4>
       <p class="country__row"><span>👫</span>${(
         +data.population / 1000000
       ).toFixed(1)} people</p>
       <p class="country__row"><span>🗣️</span>${por}</p>
-//    <p class="country__row"><span>💰</span>${cur}</p>
+  <p class="country__row"><span>💰</span>${cur}</p>
     </div>
   </article>
   `;
